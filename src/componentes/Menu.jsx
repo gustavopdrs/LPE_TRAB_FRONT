@@ -1,33 +1,53 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
+import Autenticacao from './seg/Autenticacao';
+const MenuPrivado = () => {
 
-const Menu = () => (
+    const autenticacao = Autenticacao.pegaAutenticacao();
 
-    <nav className="navbar navbar-expand-lg navbar-light navbarGremio">
-        <div className="container-fluid">
-            <img src="/logo-gremio.png" alt="" />
-            <NavLink className="navbar-brand" aria-current="page" exact to="/">SISGEE Home</NavLink>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    {/* <li className="nav-item">
-                        <NavLink className="nav-link active" aria-current="page" exact to="/">Home</NavLink>
-                    </li> */}
-                    <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Informações
-                        </a>
-                        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><NavLink className="dropdown-item" exact to="/elencos">Elencos</NavLink></li>
-                            <li><NavLink className="dropdown-item" exact to="/jogadores">Jogadores</NavLink></li>
+    return (
+        <div>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div className="container-fluid">
+                    <NavLink className="navbar-brand" aria-current="page" exact to="/privado">SISGEE</NavLink>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <NavLink className="nav-link active" aria-current="page" exact to="/privado">Home</NavLink>
+                            </li>
+                            {autenticacao &&
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" href="/privado" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Informações
+                                    </a>
+                                    <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><NavLink className="dropdown-item" exact to="elencos">Elencos</NavLink></li>
+                                        <li><NavLink className="dropdown-item" exact to="jogadores">Jogadores</NavLink></li>
+                                    </ul>
+                                </li>
+                            }
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {autenticacao ? "Usuário: " + autenticacao.nome_usuario : "Usuário"}
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li>{autenticacao ?
+                                        <NavLink className="dropdown-item" exact to="/"
+                                            onClick={() => Autenticacao.logout()}>Logout</NavLink>
+                                        :
+                                        <NavLink className="dropdown-item" exact to="/login">Login</NavLink>}</li>
+
+                                </ul>
+                            </li>
+
                         </ul>
-                    </li>
+                    </div>
+                </div>
+            </nav>
+            <Outlet />
+        </div>)
+};
 
-                </ul>
-            </div>
-        </div>
-    </nav>
-);
-
-export default Menu;
+export default MenuPrivado;

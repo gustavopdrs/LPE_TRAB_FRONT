@@ -19,7 +19,7 @@ function Tabela(){
                             </button></div>
             <Alerta alerta={alerta}></Alerta>
             {listaObjetos.length == 0 && 
-            <h1>Nenhum elenco encontrado</h1>
+            <h4>Nenhum elenco encontrado</h4>
             }
             {listaObjetos.length > 0 &&
             ( <table className="table">

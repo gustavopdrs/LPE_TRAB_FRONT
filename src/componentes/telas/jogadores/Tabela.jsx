@@ -20,7 +20,7 @@ function Tabela(){
                             </div>
             <Alerta alerta={alerta}></Alerta>
             {listaObjetos.length == 0 && 
-            <h1>Nenhum jogador encontrado</h1>
+            <h5>Nenhum jogador encontrado</h5>
             }
             {listaObjetos.length > 0 &&
             ( <table className="table">
